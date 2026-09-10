@@ -1,0 +1,40 @@
+name: Update Schedule ICS
+
+on:
+  schedule:
+    # Exécute le script tous les jours à 2h00 et 14h00 UTC
+    - cron: '0 2,14 * * *'
+  workflow_dispatch: # Permet de forcer l'exécution manuellement depuis l'interface GitHub
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Autorise l'action à créer la branche gh-pages
+
+    steps:
+      - name: 📥 Checkout du code
+        uses: actions/checkout@v4
+
+      - name: 🐍 Configuration de Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: 📦 Installation de Poetry
+        run: curl -sSL https://install.python-poetry.org | python3 -
+
+      - name: ⚙️ Installation des dépendances
+        run: poetry install --no-root
+
+      - name: 🚀 Exécution du script de synchronisation
+        env:
+          NEXTCLOUD_PASSWORD: ${{ secrets.NEXTCLOUD_PASSWORD }}
+        run: poetry run python src/schedule_sync/main.py
+
+      - name: 🌐 Déploiement sur GitHub Pages (Branche gh-pages)
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./data  # On publie uniquement le contenu du dossier data/
+          force_orphan: true   # Garde l'historique de la branche gh-pages propre et léger
