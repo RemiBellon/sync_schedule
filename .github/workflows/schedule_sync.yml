@@ -1,6 +1,9 @@
 name: Update Schedule ICS
 
 on:
+  push:
+    branches:
+      - main
   schedule:
     # Exécute le script tous les jours à 2h00 et 14h00 UTC
     - cron: '0 2,14 * * *'
