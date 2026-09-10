@@ -6,7 +6,7 @@ def download_schedule():
     # --- Link ---
     base_url = "https://ao.lpp.polytechnique.fr"
     share_token = "m3XzfANgmBjktpF"
-    password = "dof38rNP5F"
+    password = os.environ.get("NEXTCLOUD_PASSWORD", "cloud_password")
 
     # File name on the server
     file_name = "Schedule_PPF_2026_Core.ods"
