@@ -18,18 +18,18 @@ def main():
         print(f"Error in downloading: {e}")
         return
 
-    # Étape 2 : Parsing des données
+    # 2: Data parsing
     events = parse_schedule(ods_path)
 
     if not events:
         print("Error: no event was extracting")
         return
 
-    # Étape 3 : Génération de l'ICS
+    # 3: ICS
     create_ics(events, ics_path)
 
     print("--- Succeed ---")
-    # Étape 4 : Génération d'une page web d'accueil (index.html)
+    # 4: website welcome page (index.html)
     html_path = os.path.join(base_dir, "data", "index.html")
     html_content = """<!DOCTYPE html>
 <html lang="fr">
@@ -43,19 +43,28 @@ def main():
     </style>
 </head>
 <body>
-    <h1>Synchronised Schedule</h1>
+    <h1>Schedule PPF</h1>
     <p>The link must not be open in a browser. You must copy the link and add it to your phone calendar application as "subscription" (or something like that):</p>
 
     <div class="code-box">
         https://remibellon.github.io/sync_schedule/planning_promo.ics
     </div>
 
-    <h3>📱 On iPhone (iOS)</h3>
+    <h3>iPhone (iOS)</h3>
     <ol>
-        <li>Go in <b>Settings</b> > <b>Calendar</b> > <b>Account</b></li>
-        <li>Touchez <b>Ajouter un compte</b> > <b>Other</b></li>
-        <li>Touchez <b>Ajouter un cal. avec abonnement</b></li>
-        <li>Collez le lien ci-dessus et validez.</li>
+        <li>Go to <b>Settings</b> > <b>Calendar</b> > <b>Accounts</b></li>
+        <li>Tap <b>Add Account</b> > <b>Other</b></li>
+        <li>Tap <b>Add Subscribed Calendar</b></li>
+        <li>Paste the link above and tap <b>Next</b> then <b>Save</b>.</li>
+    </ol>
+
+    <h3>Android (via Google Calendar)</h3>
+    <ol>
+        <li>Open <b>Google Calendar</b> in your web browser.</li>
+        <li>On the left panel, next to <b>Other calendars</b>, click the <b>+</b> icon.</li>
+        <li>Select <b>From URL</b>.</li>
+        <li>Paste the link above and click <b>Add calendar</b>.</li>
+        <li>Open the Google Calendar app on your phone, and the events will sync automatically.</li>
     </ol>
 </body>
 </html>
