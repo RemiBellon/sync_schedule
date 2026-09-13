@@ -44,7 +44,7 @@ def main():
 </head>
 <body>
     <h1>Schedule PPF</h1>
-    <p>The link must not be open in a browser. You must copy the link and add it to your phone calendar application as "subscription" for iPhone and "from URL" in Google Calendar for Android.:</p>
+    <p>The link must not be open in a browser. You must copy the link and add it to your phone calendar application as "subscription" for iPhone and "from URL" in Google Calendar for Android. Detailed procedure is given bellow:</p>
 
     <div class="code-box">
         https://remibellon.github.io/sync_schedule/planning_promo.ics
@@ -64,7 +64,7 @@ def main():
         <li>On the left panel, next to <b>Other calendars</b>, click the <b>+</b> icon.</li>
         <li>Select <b>From URL</b>.</li>
         <li>Paste the link above and click <b>Add calendar</b>.</li>
-        <li>Open the Google Calendar app on your phone, and the events will sync automatically.</li>
+        <li>Open the Google Calendar app on your phone, go in settings then synchronize PPF 2026 and the events will sync.</li>
     </ol>
 </body>
 </html>
