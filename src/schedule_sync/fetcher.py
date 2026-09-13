@@ -11,12 +11,10 @@ def download_schedule():
     # File name on the server
     file_name = "Schedule_PPF_2026_Core.ods"
 
-    # Construction de l'URL WebDAV
-    # Note : Si le lien partage directement le fichier (et non un dossier),
-    # l'URL WebDAV peut parfois s'arrêter à /webdav/. Nous testons d'abord avec le nom du fichier.
+    # Construction URL WebDAV
     webdav_url = f"{base_url}/public.php/webdav/{file_name}"
 
-    print(f"Connexion au serveur : {base_url}...")
+    print(f"Connection to server : {base_url}...")
 
     # Authentification WebDAV (Token = Username)
     auth = HTTPBasicAuth(share_token, password)
@@ -38,7 +36,6 @@ def download_schedule():
 
     elif response.status_code == 404:
         print("No file")
-        print("Astuce : Si le lien de partage cible directement le fichier et non un dossier, essayez de modifier webdav_url en : f'{base_url}/public.php/webdav/'")
     else:
         print(f"File not downloaded. Code HTTP: {response.status_code}")
         print(f"Details : {response.text}")

@@ -11,25 +11,25 @@ def main():
     ods_path = os.path.join(base_dir, "data", "current_schedule.ods")
     ics_path = os.path.join(base_dir, "data", "planning_promo.ics")
 
-    # 1: Download from NextCloud
+    # Download from NextCloud
     try:
         download_schedule()
     except Exception as e:
         print(f"Error in downloading: {e}")
         return
 
-    # 2: Data parsing
+    # Data parsing
     events = parse_schedule(ods_path)
 
     if not events:
         print("Error: no event was extracting")
         return
 
-    # 3: ICS
+    # ICS
     create_ics(events, ics_path)
 
     print("--- Succeed ---")
-    # 4: website welcome page (index.html)
+    # website welcome page (index.html)
     html_path = os.path.join(base_dir, "data", "index.html")
     html_content = """<!DOCTYPE html>
 <html lang="fr">
@@ -44,7 +44,7 @@ def main():
 </head>
 <body>
     <h1>Schedule PPF</h1>
-    <p>The link must not be open in a browser. You must copy the link and add it to your phone calendar application as "subscription" (or something like that):</p>
+    <p>The link must not be open in a browser. You must copy the link and add it to your phone calendar application as "subscription" for iPhone and "from URL" in Google Calendar for Android.:</p>
 
     <div class="code-box">
         https://remibellon.github.io/sync_schedule/planning_promo.ics
@@ -52,7 +52,7 @@ def main():
 
     <h3>iPhone (iOS)</h3>
     <ol>
-        <li>Go to <b>Settings</b> > <b>Calendar</b> > <b>Accounts</b></li>
+        <li>Go to <b>Settings</b> > <b>Calendar (apps)</b> > <b>Accounts</b></li>
         <li>Tap <b>Add Account</b> > <b>Other</b></li>
         <li>Tap <b>Add Subscribed Calendar</b></li>
         <li>Paste the link above and tap <b>Next</b> then <b>Save</b>.</li>
@@ -60,7 +60,7 @@ def main():
 
     <h3>Android (via Google Calendar)</h3>
     <ol>
-        <li>Open <b>Google Calendar</b> in your web browser.</li>
+        <li>Open <b>Google Calendar</b> in your web browser from a computer.</li>
         <li>On the left panel, next to <b>Other calendars</b>, click the <b>+</b> icon.</li>
         <li>Select <b>From URL</b>.</li>
         <li>Paste the link above and click <b>Add calendar</b>.</li>
