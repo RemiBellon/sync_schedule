@@ -2,6 +2,7 @@ from fetcher import download_schedule
 from parser import parse_schedule
 from calendar_generator import create_ics
 import os
+import sys
 
 def main():
     print("--- Start synchronisation ---")
@@ -16,7 +17,7 @@ def main():
         download_schedule()
     except Exception as e:
         print(f"Error in downloading: {e}")
-        return
+        sys.exit(1)
 
     # Data parsing
     events = parse_schedule(ods_path)
