@@ -1,26 +1,37 @@
-from fetcher import download_schedule
-from parser import parse_schedule
-from calendar_generator import create_ics
 import os
 import sys
 
-def main():
+import requests
+from calendar_generator import create_ics
+from fetcher import download_schedule
+from parser import parse_schedule
+
+
+def main() -> None:
+    """
+    Download every schedule, merge their events and publish one .ics calendar.
+    """
     print("--- Start synchronisation ---")
 
     # path
     base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-    ods_path = os.path.join(base_dir, "data", "current_schedule.ods")
-    ics_path = os.path.join(base_dir, "data", "planning_promo.ics")
+    data_dir = os.path.join(base_dir, "data")
+    ics_path = os.path.join(data_dir, "planning_promo.ics")
 
-    # Download from NextCloud
+    # Download from NextCloud (Core + Electives)
     try:
-        download_schedule()
-    except Exception as e:
+        ods_paths = download_schedule(data_dir)
+    except (RuntimeError, requests.RequestException) as e:
         print(f"Error in downloading: {e}")
         sys.exit(1)
 
-    # Data parsing
-    events = parse_schedule(ods_path)
+    # Data parsing: every file covers a different period, all merged in one calendar
+    events = []
+    for ods_path in ods_paths:
+        file_events = parse_schedule(ods_path)
+        if not file_events:
+            print(f"Warning: no event extracted from {ods_path}")
+        events.extend(file_events)
 
     if not events:
         print("Error: no event was extracting")
